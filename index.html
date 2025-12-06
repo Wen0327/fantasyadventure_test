@@ -4651,11 +4651,19 @@ const protectedNames = ['彈弓', '鉤子', '充滿魔力的巧克力', '紙條'
 			return;
 		}
 
-		// 第二步：是否出售所有同名物品？
-		// 計算相同物品的數量與總價值
 		const itemsInCategory = Player.inventory[category];
 		const sameItems = itemsInCategory.filter(i => i.name === item.name);
 
+		// ✅ 1. 若只有一件同名物品，直接賣掉，不再問「是否全部出售」
+		if (sameItems.length <= 1) {
+			Player.inventory[category].splice(index, 1);
+			Player.gold += singlePrice;
+			this.showFloatingText(`+ ${singlePrice} G`, "yellow");
+			this.updateUI();
+			return;
+		}
+
+		// 有多件同名物品才問要不要全賣
 		let totalValue = 0;
 		for (let each of sameItems) {
 			totalValue += getPrice(each);
@@ -4667,38 +4675,25 @@ const protectedNames = ['彈弓', '鉤子', '充滿魔力的巧克力', '紙條'
 			`總價值：${totalValue} G`
 		);
 
-
 		if (sellAll) {
-			// 找出該分類中所有同名物品
-			const items = Player.inventory[category];
-			const sameItems = items.filter(i => i.name === item.name);
-			const count = sameItems.length;
-
-			// 計算總金額
+			// 賣掉所有同名物品
 			let totalGold = 0;
 			for (let each of sameItems) {
 				totalGold += getPrice(each);
 			}
-
-			// 移除所有同名物品
-			Player.inventory[category] = items.filter(i => i.name !== item.name);
-
-			// 玩家拿到錢
+			Player.inventory[category] = itemsInCategory.filter(i => i.name !== item.name);
 			Player.gold += totalGold;
-
-			this.showFloatingText(`+ ${totalGold} G`, "yellow");
-			alert(`已出售 ${count} 個 ${item.name}，共獲得 ${totalGold} G！`);
-
+			this.showFloatingText(`+ ${totalGold} G`, "yellow");  // ✅ 2. 保留飄字，不再 alert
 		} else {
-			// 僅出售單一物品（原本邏輯）
+			// 只賣當前這一件
 			Player.inventory[category].splice(index, 1);
 			Player.gold += singlePrice;
-
 			this.showFloatingText(`+ ${singlePrice} G`, "yellow");
 		}
 
 		this.updateUI();
 	},
+
 
 
     triggerChest() {
@@ -5918,7 +5913,6 @@ Game.init();
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"fd30e0d6d95b4a8085f67b673d27ef86","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
-
 
 
 
