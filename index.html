@@ -675,34 +675,49 @@ pointer-events: none;
         </div>
         
 <div class="inv-container">
-            <div class="inv-col">
-                <h4 style="display:flex; justify-content:space-between; align-items:center;">
-                    <span>📦 裝備</span>
-                    <button onclick="Game.openInventoryModal('equipment')" style="padding:2px 6px; font-size:0.8em; background:#444;">🔍</button>
-                </h4>
-                <div class="item-list" id="inv-equip"></div>
-            </div>
-            <div class="inv-col">
-                <h4 style="display:flex; justify-content:space-between; align-items:center;">
-                    <span>💍 飾品</span>
-                    <button onclick="Game.openInventoryModal('accessory')" style="padding:2px 6px; font-size:0.8em; background:#444;">🔍</button>
-                </h4>
-                <div class="item-list" id="inv-acc"></div>
-            </div>
-            <div class="inv-col">
-                <h4 style="display:flex; justify-content:space-between; align-items:center;">
-                    <span>🧪 消耗</span>
-                    <button onclick="Game.openInventoryModal('consumable')" style="padding:2px 6px; font-size:0.8em; background:#444;">🔍</button>
-                </h4>
-                <div class="item-list" id="inv-consum"></div>
-            </div>
-            <div class="inv-col">
-                <h4 style="display:flex; justify-content:space-between; align-items:center;">
-                    <span>🧩 素材</span>
-                    <button onclick="Game.openInventoryModal('material')" style="padding:2px 6px; font-size:0.8em; background:#444;">🔍</button>
-                </h4>
-                <div class="item-list" id="inv-mat"></div>
-            </div>
+			<div class="inv-col">
+				<h4 style="display:flex; justify-content:space-between; align-items:center;">
+					<span>📦 裝備</span>
+					<div>
+						<button onclick="Game.sortInventory('equipment')" style="padding:2px 6px; font-size:0.8em; background:#444; margin-right:4px;">🧹</button>
+						<button onclick="Game.openInventoryModal('equipment')" style="padding:2px 6px; font-size:0.8em; background:#444;">🔍</button>
+					</div>
+				</h4>
+				<div class="item-list" id="inv-equip"></div>
+			</div>
+
+			<div class="inv-col">
+				<h4 style="display:flex; justify-content:space-between; align-items:center;">
+					<span>💍 飾品</span>
+					<div>
+						<button onclick="Game.sortInventory('accessory')" style="padding:2px 6px; font-size:0.8em; background:#444; margin-right:4px;">🧹</button>
+						<button onclick="Game.openInventoryModal('accessory')" style="padding:2px 6px; font-size:0.8em; background:#444;">🔍</button>
+					</div>
+				</h4>
+				<div class="item-list" id="inv-acc"></div>
+			</div>
+
+			<div class="inv-col">
+				<h4 style="display:flex; justify-content:space-between; align-items:center;">
+					<span>🧪 消耗</span>
+					<div>
+						<button onclick="Game.sortInventory('consumable')" style="padding:2px 6px; font-size:0.8em; background:#444; margin-right:4px;">🧹</button>
+						<button onclick="Game.openInventoryModal('consumable')" style="padding:2px 6px; font-size:0.8em; background:#444;">🔍</button>
+					</div>
+				</h4>
+				<div class="item-list" id="inv-consum"></div>
+			</div>
+
+			<div class="inv-col">
+				<h4 style="display:flex; justify-content:space-between; align-items:center;">
+					<span>🧩 素材</span>
+					<div>
+						<button onclick="Game.sortInventory('material')" style="padding:2px 6px; font-size:0.8em; background:#444; margin-right:4px;">🧹</button>
+						<button onclick="Game.openInventoryModal('material')" style="padding:2px 6px; font-size:0.8em; background:#444;">🔍</button>
+					</div>
+				</h4>
+				<div class="item-list" id="inv-mat"></div>
+			</div>
         </div>
 
     <div style="margin-top: 20px; border-top: 1px solid #444; padding-top: 15px; display:flex; flex-direction:column; gap:10px;">
@@ -5781,11 +5796,24 @@ getEnemySkillDesc(name) {
         }));
 
         // 2. 執行排序 (神話 > 傳說 > 史詩 > 稀有 > 優質 > 一般)
-        items.sort((a, b) => {
-            const valA = CONFIG.rarityDisplay[a.rarity]?.val || 0;
-            const valB = CONFIG.rarityDisplay[b.rarity]?.val || 0;
-            return valB - valA;
-        });
+        // 2. 執行排序：先稀有度 (高→低)，再名稱 (A→Z)，最後用原始索引當 tie-breaker
+		items.sort((a, b) => {
+			const valA = CONFIG.rarityDisplay[a.rarity]?.val || 0;
+			const valB = CONFIG.rarityDisplay[b.rarity]?.val || 0;
+
+			// ① 先比稀有度：神話 > 傳說 > 史詩 > ...
+			if (valA !== valB) return valB - valA;
+
+			// ② 再比名稱：同稀有度時，名稱相同的會全部黏在一起
+			const nameA = a.name || "";
+			const nameB = b.name || "";
+			const nameCmp = nameA.localeCompare(nameB, 'zh-Hant'); // 支援中文排序
+			if (nameCmp !== 0) return nameCmp;
+
+			// ③ 最後用原始索引穩定排序，避免同名同稀有度時出現跳動
+			return a.originalIndex - b.originalIndex;
+		});
+
 
         if (items.length === 0) {
             content.innerHTML = "<div style='grid-column:1/-1; text-align:center; color:#666; margin-top:50px;'>背包是空的</div>";
@@ -5833,6 +5861,55 @@ getEnemySkillDesc(name) {
 
         modal.style.display = 'flex';
     },
+	// 共用：背包排序用的比較函式（稀有度 > 名稱 > 原始順序）
+	compareInventoryItem(a, b) {
+		const valA = CONFIG.rarityDisplay[a.rarity]?.val || 0;
+		const valB = CONFIG.rarityDisplay[b.rarity]?.val || 0;
+
+		// ① 稀有度：神話 > 傳說 > 史詩 > 稀有 > ...
+		if (valA !== valB) return valB - valA;
+
+		// ② 名稱：同稀有度時，按名稱排序，讓同名物品黏在一起
+		const nameA = a.name || "";
+		const nameB = b.name || "";
+		const nameCmp = nameA.localeCompare(nameB, 'zh-Hant');
+		if (nameCmp !== 0) return nameCmp;
+
+		// ③ 如果真的完全一樣，就保持原本相對順序
+		//   注意：實際背包陣列沒有 originalIndex，所以這裡不處理，
+		//   交給 JS sort 的「不是完全穩定」也沒關係。
+		return 0;
+	},
+
+	// 新增：整理背包（可指定分類，也可全部一起整理）
+	sortInventory(category = null) {
+		const cats = category 
+			? [category] 
+			: ['equipment', 'accessory', 'consumable', 'material'];
+
+		cats.forEach(cat => {
+			const arr = Player.inventory[cat];
+			if (!Array.isArray(arr) || arr.length <= 1) return;
+
+			// 直接就地排序，與 openInventoryModal 的排序邏輯一致
+			arr.sort((a, b) => this.compareInventoryItem(a, b));
+		});
+
+		this.updateUI();
+
+		// 小提示用，不一定要有
+		const catNameMap = {
+			equipment: '裝備',
+			accessory: '飾品',
+			consumable: '消耗品',
+			material: '素材'
+		};
+		const msg = category 
+			? `已整理 ${catNameMap[category] || category} 背包`
+			: '已整理全部背包';
+		this.showFloatingText(msg, "#cccccc");
+	},
+
    
 };
 
@@ -5841,7 +5918,6 @@ Game.init();
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"fd30e0d6d95b4a8085f67b673d27ef86","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
-
 
 
 
