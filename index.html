@@ -161,17 +161,12 @@
 			justify-content: center;
 			text-align: center;
 
-			/* 起始高度仍然 550px */
+			/* 起始高度 */
 			height: 550px;
-
-			/* 允許玩家用滑鼠拖曳調整高度（只允許上下） */
-			resize: vertical;
-
-			/* 設一個最小 & 最大值，避免拉到太誇張 */
-			min-height: 300px;
+			min-height: 240px;
 			max-height: 900px;
 
-			overflow: hidden;   /* 保持原本的設定，由內層捲動 */
+			overflow: hidden;  /* 外層不捲，由內層捲 */
 		}
 
 		/* 內層：真正滾動的區塊，裝 icon＋標題＋敘述＋商店 */
@@ -181,7 +176,33 @@
 			overflow-y: auto;      /* ✅ 全部一起變成垂直捲動 */
 			overflow-x: hidden;
 		}
+		/* 拖曳用橫條：電腦滑鼠 & 手機觸控都能操作 */
+		#event-resizer {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 14px;           /* 手機需要比較寬的拖曳區 */
+			cursor: ns-resize;
+			touch-action: none;     /* 避免拖曳時頁面整體跟著捲動 */
+		}
 
+		/* 視覺化的小橫條 */
+		#event-resizer::before {
+			content: "";
+			display: block;
+			width: 80px;
+			height: 4px;
+			margin: 4px auto 0;
+			border-radius: 999px;
+			background: #555;
+			opacity: 0.8;
+		}
+
+		/* 煉獄模式的拖曳條顏色 */
+		body.inferno-mode #event-resizer::before {
+			background: #aa4444;
+		}
 		/* 商店 / 製作稍微留個空隙，看起來比較不擠 */
 		#merchant-area,
 		#crafting-area {
@@ -662,6 +683,7 @@ pointer-events: none;
 			<div id="merchant-area" class="hidden"></div>
 			<div id="crafting-area" class="hidden"></div>
 		</div>
+		<div id="event-resizer"></div>
     </div>
 
     <div id="controls">
@@ -5918,12 +5940,60 @@ getEnemySkillDesc(name) {
 };
 
 Game.init();
+(function () {
+    const eventDisplay = document.getElementById('event-display');
+    const resizer = document.getElementById('event-resizer');
+
+    if (!eventDisplay || !resizer) return;
+
+    const MIN_HEIGHT = 240;
+    const MAX_HEIGHT = 900;
+
+    let startY = 0;
+    let startHeight = 0;
+
+    function getClientY(e) {
+        return e.touches ? e.touches[0].clientY : e.clientY;
+    }
+
+    function onPointerDown(e) {
+        e.preventDefault();
+        startY = getClientY(e);
+        startHeight = eventDisplay.getBoundingClientRect().height;
+
+        document.addEventListener('mousemove', onPointerMove);
+        document.addEventListener('mouseup', onPointerUp);
+        document.addEventListener('touchmove', onPointerMove, { passive: false });
+        document.addEventListener('touchend', onPointerUp);
+    }
+
+    function onPointerMove(e) {
+        e.preventDefault();
+        const currentY = getClientY(e);
+        const deltaY = currentY - startY;
+        let newHeight = startHeight + deltaY;
+
+        if (newHeight < MIN_HEIGHT) newHeight = MIN_HEIGHT;
+        if (newHeight > MAX_HEIGHT) newHeight = MAX_HEIGHT;
+
+        eventDisplay.style.height = newHeight + 'px';
+    }
+
+    function onPointerUp() {
+        document.removeEventListener('mousemove', onPointerMove);
+        document.removeEventListener('mouseup', onPointerUp);
+        document.removeEventListener('touchmove', onPointerMove);
+        document.removeEventListener('touchend', onPointerUp);
+    }
+
+    resizer.addEventListener('mousedown', onPointerDown);
+    resizer.addEventListener('touchstart', onPointerDown, { passive: false });
+})();
+
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"fd30e0d6d95b4a8085f67b673d27ef86","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
-
-
 
 
 
