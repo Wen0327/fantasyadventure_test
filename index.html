@@ -147,7 +147,7 @@
 		}
 
 
-		/* 外層：高度固定，負責置中 event-inner */
+		/* 外層：高度可調整，負責置中 event-inner */
 		#event-display {
 			background: #222;
 			border-radius: var(--border-radius);
@@ -157,12 +157,21 @@
 
 			display: flex;
 			flex-direction: column;
-			align-items: center;   /* ✅ 保留你要的置中 */
+			align-items: center;
 			justify-content: center;
 			text-align: center;
 
-			height: 550px;         /* ✅ 固定高度，想高一點自己調 */
-			overflow: hidden;      /* 外層不捲，由內層捲 */
+			/* 起始高度仍然 550px */
+			height: 550px;
+
+			/* 允許玩家用滑鼠拖曳調整高度（只允許上下） */
+			resize: vertical;
+
+			/* 設一個最小 & 最大值，避免拉到太誇張 */
+			min-height: 300px;
+			max-height: 900px;
+
+			overflow: hidden;   /* 保持原本的設定，由內層捲動 */
 		}
 
 		/* 內層：真正滾動的區塊，裝 icon＋標題＋敘述＋商店 */
@@ -5913,6 +5922,7 @@ Game.init();
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"fd30e0d6d95b4a8085f67b673d27ef86","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
+
 
 
 
