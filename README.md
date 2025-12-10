@@ -1,1 +1,1 @@
-original source is made by shota6666, I just fix some issue here
+The original source code is made by shota6666.
