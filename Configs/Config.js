@@ -1,0 +1,408 @@
+export const CONFIG = {
+    rarityProb: { common: 0.5, uncommon: 0.3, rare: 0.15, epic: 0.04, legendary: 0.01 },
+    rarityDisplay: {
+        common: { color: "rarity-common", label: "一般", val: 1 },
+        uncommon: { color: "rarity-uncommon", label: "優質", val: 2 },
+        rare: { color: "rarity-rare", label: "稀有", val: 3 },
+        epic: { color: "rarity-epic", label: "史詩", val: 4 },
+        legendary: { color: "rarity-legendary", label: "傳說", val: 5 },
+        mythic: { color: "rarity-mythic", label: "神話", val: 6 },
+        ultra: { color: "rarity-ultra", label: "極傳說", val: 7 }
+    },
+   infernoMonsters: [
+        { name: "暗影史萊姆", weight: 20, baseGold: 50, icon: "🌑", hp: 1000, atk: 150, drop: "暗影凝膠" },
+        { name: "虛空魔眼", weight: 20, baseGold: 60, icon: "👁️", hp: 2400, atk: 360, drop: "虛空之塵" },
+        { name: "熔岩魔像", weight: 15, baseGold: 100, icon: "🌋", hp: 6000, atk: 400, drop: "熔岩核心", tier: "normal" },
+        { name: "夢魘戰馬", weight: 15, baseGold: 120, icon: "🦄", hp: 5000, atk: 600, drop: "夢魘之角", tier: "normal" },
+        { name: "墮落騎士", weight: 10, baseGold: 300, icon: "🤺", hp: 10000, atk: 800, drop: "腐朽鎧甲", tier: "elite" },
+        { name: "混沌觸手", weight: 10, baseGold: 350, icon: "🦑", hp: 9000, atk: 900, drop: "混沌神經", tier: "elite" },
+        { name: "鮮血伯爵", weight: 4, baseGold: 800, icon: "🧛", hp: 24000, atk: 1200, drop: "鮮血精華", tier: "boss" },
+        { name: "巫妖王", weight: 4, baseGold: 900, icon: "💀", hp: 20000, atk: 1400, drop: "命匣碎片", tier: "boss" },
+        { name: "深淵魔龍", weight: 2, baseGold: 2000, icon: "🐲", hp: 60000, atk: 2000, drop: "魔龍逆鱗", tier: "boss" },
+        { name: "舊日支配者", weight: 0.5, baseGold: 9999, icon: "🐙", hp: 99999, atk: 9999, drop: "不可名狀之物", tier: "boss", isOldOne: true }
+    ],
+    // 煉獄神話裝備
+    infernoItems: [
+        { id: "w_ragnarok", name: "諸神黃昏", type: "weapon", val: 2000, rarity: "mythic", price: 10000, icon: "☄️", desc: "[真實傷害] 5% 機率一擊必殺 (對支配者與神無效)" },
+{ id: "acc_red_cloth", name: "紅布", type: "accessory", rarity: "mythic", price: 5000, icon: "🧣", desc: "[鬥牛士] 暴擊率 +10%，遭遇牛頭人衝撞時必定免疫" },
+        { id: "w_minotaur", name: "牛頭人戰斧", type: "weapon", val: 3000, rarity: "mythic", price: 8000, icon: "🪓", desc: "[嗜血成長] 擊殺敵人時 1% 機率永久提升 3% 基礎暴擊率" },
+        { id: "w_soulreaver", name: "噬魂鐮刀", type: "weapon", val: 1500, rarity: "mythic", price: 8000, icon: "☠️", desc: "[吸血] 造成傷害的 5% 轉為生命力" },
+        { id: "a_voidwalker", name: "虛空行者斗篷", type: "armor", val: 3000, rarity: "mythic", price: 9000, icon: "👻", desc: "[絕對迴避] 敵方攻擊有 10% 機率落空" },
+        { 
+            id: "acc_wheel", 
+            name: "命運之輪", 
+            type: "accessory", 
+            rarity: "mythic", 
+            price: 12000, 
+            icon: "🎡", 
+            // [修改] 描述改為 每 20%
+            desc: "[暴擊突破] 暴擊率歸0轉化為傷害倍率 (每 20% 暴率提升 1 倍傷害)" 
+        },
+        { id: "acc_chaos", name: "混沌魔方", type: "accessory", rarity: "mythic", price: 15000, icon: "🎲", desc: "[隨機倍率] 裝備時骰出 0.5~3.0 倍攻擊倍率" },
+        { id: "c_harpy_blood", name: "哈比血", type: "consumable", val: 500, rarity: "mythic", price: 500, icon: "🍷", desc: "恢復 500 點生命" },
+        { id: "c_pure_blood", name: "淨化血", type: "consumable", val: 99999, rarity: "mythic", price: 2000, icon: "✨", desc: "完全恢復生命" },
+{ id: "w_doom", name: "破滅大劍", type: "weapon", val: 3000, rarity: "mythic", price: 20000, icon: "🗡️", desc: "單純且極致的破壞力 (攻擊力 3000)" },
+
+{ 
+            id: "s_demon_wall", 
+            name: "魔神之壁", 
+            type: "shield", 
+            val: 10, 
+            rarity: "mythic", 
+            price: 25000, 
+            icon: "🛡️", 
+            desc: "[絕對防禦] 來自地獄的黑曜石巨盾，可抵擋 10 次攻擊" 
+        },
+        { id: "a_apocalypse", name: "末世之鎧", type: "armor", val: 1000, rarity: "mythic", price: 20000, icon: "🛡️", desc: "[吞噬生命] 攻擊時 1% 機率永久增加 100 點基礎生命" },
+
+// --- 請補上這兩段 ---
+    { 
+        id: "acc_transcendence", 
+        name: "超越魔方", 
+        type: "accessory", 
+        rarity: "mythic", 
+        price: 30000, 
+        icon: "🧊", 
+        desc: "[超越極限] 每回合隨機骰出 1.0~5.0 倍攻擊倍率 (與混沌疊加)" 
+    },
+    { 
+        id: "w_void_breaker", 
+        name: "虛空破滅劍", 
+        type: "weapon", 
+        val: 2000, 
+        rarity: "mythic", 
+        price: 30000, 
+        icon: "🌌", 
+        desc: "[靈魂吞噬] 擊殺敵人時 10% 機率永久增加 100 點基礎攻擊力" 
+    },
+{ 
+    id: "w_primordial", 
+    name: "原初之劍", 
+    type: "weapon", 
+    val: 33333, 
+    rarity: "ultra", 
+    price: 99999, 
+    icon: "⚔️", 
+    desc: "[原初之力] 攻擊力x1.5，且攻擊無視神之代行者的【聖潔力場】(傷害上限無效)" 
+},
+// [新增] 煉獄爐卷軸
+        { 
+            id: "c_inferno_scroll", 
+            name: "煉獄爐卷軸", 
+            type: "consumable", 
+            rarity: "mythic", 
+            price: 5000, 
+            icon: "📜", 
+            desc: "隨時隨地召喚煉獄爐火 (消耗品)" 
+        }
+    
+    ],
+    // --- [NEW] 七宗罪新增資料 ---
+   sinItems: [
+    { id: "acc_pride", name: "傲慢之眼", type: "accessory", rarity: "mythic", price: 25000, icon: "🦁", desc: "[傲慢] 攻擊力 +100%，但所受傷害 +50%" },
+    { id: "acc_envy", name: "嫉妒魔盒", type: "accessory", rarity: "mythic", price: 25000, icon: "🦊", desc: "[嫉妒] 攻擊時 10% 機率完全恢復生命" },
+    { id: "acc_wrath", name: "暴怒指虎", type: "accessory", rarity: "mythic", price: 25000, icon: "😡", desc: "[暴怒] 攻擊力 +1000，且攻擊時 10% 機率造成兩次傷害" },
+    { id: "acc_sloth", name: "眠戒", type: "accessory", rarity: "mythic", price: 25000, icon: "💤", desc: "[怠惰] 逃跑失敗時受到的傷害減少 50%" },
+    { id: "acc_greed", name: "金色聖像", type: "accessory", rarity: "mythic", price: 25000, icon: "🐷", desc: "[貪婪] 擊殺怪物獲得金幣 +100%" },
+    { id: "acc_gluttony", name: "暴食之牙", type: "accessory", rarity: "mythic", price: 25000, icon: "🍲", desc: "[暴食] 每次攻擊恢復 10% 最大生命" },
+    { id: "acc_lust", name: "魅魔香水", type: "accessory", rarity: "mythic", price: 25000, icon: "👙", desc: "[色慾] 每場戰鬥第一次攻擊必定暴擊" },
+    { id: "m_crown_sin", name: "原罪之冠", type: "material", rarity: "ultra", price: 99999, icon: "👑", desc: "[終極] 集齊七宗罪的證明，可召喚真神。" }
+],
+
+specialItems: {
+        chocolate: { name: "充滿魔力的巧克力", type: "material", rarity: "epic", icon: "🍫", desc: "散發著魔力的巧克力，無法食用。" },
+        note: { name: "紙條", type: "material", rarity: "mythic", icon: "📄", desc: "上面寫著魅魔的真名。(重要道具)" },
+        holy_sword: { name: "神聖光劍", type: "weapon", val: 1000, rarity: "mythic", price: 0, icon: "⚔️", desc: "莉莉絲贈送的神器。" },
+
+        
+        hourglass: { 
+        name: "輪迴沙漏", 
+        type: "consumable", // 這裡建議保持 consumable 或改為 special
+        rarity: "ultra", 
+        icon: "⏳", 
+        desc: "發動後重置遊戲至初始狀態 (等級/金幣/物品歸零)，但可選擇一件飾品繼承。", 
+        price: 0 
+    },
+},
+
+forgeItems: [
+        { 
+            id: "acc_shadow", name: "暗影替身", type: "accessory", rarity: "mythic", price: 20000, icon: "👤", 
+            desc: "[流體迴避] 10% 機率無效化傷害並反擊 (10% 防禦力)",
+            recipe: { mat: "暗影凝膠", count: 10 }
+        },
+        { 
+            id: "shield_void", name: "虛空之鏡", type: "shield", 
+            val: 2, 
+            rarity: "mythic", price: 20000, icon: "🪞", 
+            // [修改] 描述更新為 反彈 50%
+            desc: "[視線折射] 可擋暴擊，70% 機率不消耗耐久，反彈 50% 傷害",
+            recipe: { mat: "虛空之塵", count: 10 }
+        },
+        { 
+            id: "armor_magma", name: "地心熔爐鎧", type: "armor", val: 2000, rarity: "mythic", price: 20000, icon: "🌋", 
+            desc: "[過熱反應] 受傷-20%。回合開始雙方各扣 5% HP (自身Max, 敵方Current)",
+            recipe: { mat: "熔岩核心", count: 10 }
+        },
+        { 
+            id: "w_nightmare", name: "夢魘穿刺者", type: "weapon", val: 1500, rarity: "mythic", price: 20000, icon: "🦄", 
+            desc: "[恐懼衝鋒] 首回合攻擊 +100%。若未擊殺，下回合暈眩",
+            recipe: { mat: "夢魘之角", count: 10 }
+        },
+        { 
+            id: "acc_dead", name: "亡者項鍊", type: "accessory", rarity: "mythic", price: 20000, icon: "💀", 
+            desc: "[亡者怨念] 死亡時進入靈魂型態 3 回合 (攻x2)，擊殺則復活",
+            recipe: { mat: "腐朽鎧甲", count: 10 }
+        },
+        { 
+            id: "w_chaos", name: "理智鞭笞", type: "weapon", val: 0, rarity: "mythic", price: 20000, icon: "🦑", 
+            desc: "[思維污染] 攻擊 500~5000。10% 機率混亂敵人",
+            recipe: { mat: "混沌神經", count: 10 }
+        },
+        { 
+            id: "acc_blood", name: "血之契約書", type: "accessory", rarity: "mythic", price: 20000, icon: "📜", 
+            desc: "[鮮血轉化] MaxHP 減半，減少值轉為攻擊。無法使用藥水",
+            recipe: { mat: "鮮血精華", count: 10 }
+        },
+        { 
+            id: "acc_phylactery", name: "永生護符", type: "accessory", rarity: "mythic", price: 20000, icon: "⚱️", 
+            desc: "[命匣儲存] 擊殺存魂 (Max 200)。致死時耗 50 魂復活 50% HP",
+            recipe: { mat: "命匣碎片", count: 10 }
+        },
+        { 
+            id: "armor_dragon", name: "逆鱗龍裝", type: "armor", val: 4000, rarity: "mythic", price: 20000, icon: "🐉", 
+            desc: "[龍之怒] 被暴擊時 10% 機率斬殺 (對神之代行者無效)",
+            recipe: { mat: "魔龍逆鱗", count: 10 }
+        },
+        
+        { 
+            id: "w_oldone", name: "滅世之槍", type: "weapon", val: 5000, rarity: "mythic", price: 50000, icon: "🔱", 
+            desc: "[支配者] 50% 機率支配敵人 (DoT 20, 100% 掉落)",
+            recipe: { mat: "不可名狀之物", count: 5 }
+        }
+    ],
+
+
+    sinBuffs: {
+        sloth_curse: { id: 'sloth_curse', name: '💤 懶惰的詛咒', type: 'debuff', desc: '無法攻擊，只能逃跑 (剩餘 10 場)' },
+        greed_shackle: { id: 'greed_shackle', name: '⛓️ 黃金枷鎖', type: 'debuff', desc: '敏捷下降，受傷增加 20% (需找惡魔商人消除)' },
+        lust_charm: { id: 'lust_charm', name: '💋 媚氣環繞', type: 'debuff', desc: '每次遭遇事件扣除 10% 最大生命' }
+    },
+    sinMonsters: [
+        { name: "鏡像", icon: "👤", hp: 1, atk: 1, drop: "", tier: "boss" }, // 數值動態生成
+        { name: "狂戰士", icon: "⛓️", hp: 40000, atk: 1000, drop: "", tier: "boss" },
+        { name: "黃金巨像", icon: "🗽", hp: 1, atk: 1000, drop: "", tier: "boss" } // HP 動態生成
+    ],
+    // ---------------------------
+   accessories: {
+        // --- 史萊姆系列 ---
+        acc_slime_1: { id: 'acc_slime_1', name: "凝膠戒指", type: 'accessory', rarity: 'common', price: 100, icon: "⚪", desc: "毫無用處", recipe: {mat: "史萊姆黏液", count: 10} },
+        acc_slime_2: { id: 'acc_slime_2', name: "精華護身符", type: 'accessory', rarity: 'rare', price: 500, icon: "🔵", desc: "每次事件回復 2 點生命", recipe: {mat: "史萊姆精華", count: 10} },
+        acc_slime_3: { id: 'acc_slime_3', name: "黏液皇冠", type: 'accessory', rarity: 'epic', price: 2000, icon: "🟠", desc: "每次事件回復 10 點生命", recipe: {mat: "史萊姆王冠", count: 5} },
+        
+        // --- 哥布林系列 ---
+        acc_gob_1: { id: 'acc_gob_1', name: "破布背包", type: 'accessory', rarity: 'common', price: 150, icon: "⚪", desc: "金幣獲取量 +5% (非商人)", recipe: {mat: "破布", count: 10} },
+        acc_gob_2: { id: 'acc_gob_2', name: "金耳環", type: 'accessory', rarity: 'rare', price: 600, icon: "🔵", desc: "金幣獲取量 +10% (非商人)", recipe: {mat: "哥布林耳環", count: 10} },
+        acc_gob_3: { id: 'acc_gob_3', name: "貪婪金牙", type: 'accessory', rarity: 'epic', price: 2500, icon: "🟠", desc: "金幣獲取量 +20% (非商人)", recipe: {mat: "哥布林金牙", count: 5} },
+        
+        // --- 狂狼系列 ---
+        acc_wolf_1: { id: 'acc_wolf_1', name: "狼皮手套", type: 'accessory', rarity: 'common', price: 200, icon: "⚪", desc: "致命一擊機率 +1%", recipe: {mat: "狼皮", count: 10} },
+        acc_wolf_2: { id: 'acc_wolf_2', name: "狼牙項鍊", type: 'accessory', rarity: 'rare', price: 800, icon: "🔵", desc: "致命一擊機率 +3%", recipe: {mat: "狼牙", count: 10} },
+        acc_wolf_3: { id: 'acc_wolf_3', name: "血月披風", type: 'accessory', rarity: 'epic', price: 3000, icon: "🟠", desc: "致命一擊機率 +8%", recipe: {mat: "狼王披風", count: 5} },
+        
+        // --- 骷髏系列 ---
+        acc_skel_1: { id: 'acc_skel_1', name: "骨戒", type: 'accessory', rarity: 'common', price: 250, icon: "⚪", desc: "傷害減少 5% (不含暴擊)", recipe: {mat: "骨頭", count: 10} },
+        acc_skel_2: { id: 'acc_skel_2', name: "靈魂容器", type: 'accessory', rarity: 'rare', price: 1000, icon: "🔵", desc: "傷害減少 10% (不含暴擊)", recipe: {mat: "靈魂碎片", count: 10} },
+        acc_skel_3: { id: 'acc_skel_3', name: "死靈護符", type: 'accessory', rarity: 'epic', price: 3500, icon: "🟠", desc: "傷害減少 15% (含暴擊)", recipe: {mat: "死靈頭骨", count: 5} },
+        
+        // --- 半獸人系列 ---
+        acc_orc_1: { id: 'acc_orc_1', name: "斷劍掛飾", type: 'accessory', rarity: 'common', price: 300, icon: "⚪", desc: "哈比事件擊退率 +10%", recipe: {mat: "斷劍", count: 10} },
+        acc_orc_2: { id: 'acc_orc_2', name: "蠻族護符", type: 'accessory', rarity: 'rare', price: 1200, icon: "🔵", desc: "哈比事件擊退率 +30%", recipe: {mat: "半獸人護符", count: 10} },
+        acc_orc_3: { id: 'acc_orc_3', name: "威望號角", type: 'accessory', rarity: 'epic', price: 4000, icon: "🟠", desc: "哈比事件必定擊退", recipe: {mat: "戰爭號角", count: 5} },
+        
+        // --- 幽靈系列 ---
+        acc_ghost_1: { id: 'acc_ghost_1', name: "靈質斗篷", type: 'accessory', rarity: 'common', price: 350, icon: "⚪", desc: "逃跑成功率 +2%", recipe: {mat: "靈質", count: 10} },
+        acc_ghost_2: { id: 'acc_ghost_2', name: "怨念念珠", type: 'accessory', rarity: 'rare', price: 1500, icon: "🔵", desc: "逃跑成功率 +5%", recipe: {mat: "怨念集合體", count: 10} },
+        acc_ghost_3: { id: 'acc_ghost_3', name: "冥界提燈", type: 'accessory', rarity: 'epic', price: 4500, icon: "🟠", desc: "逃跑成功率 +10%", recipe: {mat: "幽靈提燈", count: 5} },
+        
+        // --- 石巨人系列 ---
+        acc_golem_1: { id: 'acc_golem_1', name: "石塊徽章", type: 'accessory', rarity: 'common', price: 500, icon: "⚪", desc: "生命上限 +30", recipe: {mat: "石塊", count: 10} },
+        acc_golem_2: { id: 'acc_golem_2', name: "魔導核心", type: 'accessory', rarity: 'rare', price: 2000, icon: "🔵", desc: "生命上限 +100", recipe: {mat: "魔力核心", count: 10} },
+        acc_golem_3: { id: 'acc_golem_3', name: "磐石之心", type: 'accessory', rarity: 'epic', price: 6000, icon: "🟠", desc: "生命上限 +200", recipe: {mat: "大地之心", count: 5} },
+        
+        // --- 食人妖系列 ---
+        acc_troll_1: { id: 'acc_troll_1', name: "木棒護身符", type: 'accessory', rarity: 'common', price: 600, icon: "⚪", desc: "攻擊力 +10", recipe: {mat: "巨棒", count: 10} },
+        acc_troll_2: { id: 'acc_troll_2', name: "鮮血瓶", type: 'accessory', rarity: 'rare', price: 2500, icon: "🔵", desc: "攻擊力 +20", recipe: {mat: "食人妖之血", count: 10} },
+        acc_troll_3: { id: 'acc_troll_3', name: "古老圖騰", type: 'accessory', rarity: 'epic', price: 7000, icon: "🟠", desc: "攻擊力 +35", recipe: {mat: "食人妖圖騰", count: 5} },
+        
+        // --- 雙足飛龍系列 ---
+        acc_wyv_1: { id: 'acc_wyv_1', name: "龍鱗片", type: 'accessory', rarity: 'common', price: 1000, icon: "⚪", desc: "首領傷害 +5%", recipe: {mat: "龍鱗", count: 10} },
+        acc_wyv_2: { id: 'acc_wyv_2', name: "龍淚墜飾", type: 'accessory', rarity: 'rare', price: 4000, icon: "🔵", desc: "首領傷害 +8%", recipe: {mat: "龍之淚", count: 10} },
+        acc_wyv_3: { id: 'acc_wyv_3', name: "真龍之心", type: 'accessory', rarity: 'epic', price: 8000, icon: "🟠", desc: "首領傷害 +20%", recipe: {mat: "龍心", count: 5} },
+        
+        // --- 魔王系列 ---
+        acc_demon_1: { id: 'acc_demon_1', name: "黑暗碎片", type: 'accessory', rarity: 'rare', price: 2000, icon: "⚪", desc: "攻+10 HP+10 暴+2%", recipe: {mat: "黑暗物質", count: 10} },
+        acc_demon_2: { id: 'acc_demon_2', name: "魔君徽章", type: 'accessory', rarity: 'epic', price: 5000, icon: "🔵", desc: "攻+20 HP+20 暴+5%", recipe: {mat: "魔王印記", count: 10} },
+        acc_demon_3: { id: 'acc_demon_3', name: "混沌魔眼", type: 'accessory', rarity: 'legendary', price: 10000, icon: "🟠", desc: "攻+40 HP+40 暴+20%", recipe: {mat: "魔神之眼", count: 5} }
+    },
+    // 更新 Loot Table (整合彈弓與鉤子)
+    lootData: {
+        "史萊姆黏液": { price: 10, rarity: "common", icon: "💧" },
+        "史萊姆精華": { price: 50, rarity: "uncommon", icon: "✨" },
+        "史萊姆王冠": { price: 200, rarity: "rare", icon: "👑" },
+        "破布": { price: 15, rarity: "common", icon: "🧶" },
+        "哥布林耳環": { price: 60, rarity: "uncommon", icon: "💍" },
+        "哥布林金牙": { price: 250, rarity: "rare", icon: "🦷" },
+        "狼皮": { price: 20, rarity: "common", icon: "🧵" },
+        "狼牙": { price: 80, rarity: "uncommon", icon: "🦴" },
+        "狼王披風": { price: 300, rarity: "rare", icon: "🧣" },
+        "骨頭": { price: 25, rarity: "common", icon: "🦴" },
+        "靈魂碎片": { price: 100, rarity: "uncommon", icon: "👻" },
+        "死靈頭骨": { price: 350, rarity: "rare", icon: "💀" },
+        "斷劍": { price: 30, rarity: "common", icon: "🗡️" },
+        "半獸人護符": { price: 120, rarity: "uncommon", icon: "🧿" },
+        "戰爭號角": { price: 400, rarity: "rare", icon: "📯" },
+        "靈質": { price: 35, rarity: "common", icon: "🌫️" },
+        "怨念集合體": { price: 150, rarity: "uncommon", icon: "👿" },
+        "幽靈提燈": { price: 450, rarity: "rare", icon: "🏮" },
+        "石塊": { price: 50, rarity: "common", icon: "🪨" },
+        "魔力核心": { price: 200, rarity: "rare", icon: "🔮" },
+        "大地之心": { price: 600, rarity: "epic", icon: "💎" },
+        "巨棒": { price: 60, rarity: "common", icon: "🪵" },
+        "食人妖之血": { price: 250, rarity: "rare", icon: "🩸" },
+        "食人妖圖騰": { price: 700, rarity: "epic", icon: "🗿" },
+        "龍鱗": { price: 100, rarity: "uncommon", icon: "🛡️" },
+        "龍之淚": { price: 400, rarity: "rare", icon: "💧" },
+        "龍心": { price: 800, rarity: "epic", icon: "❤️" },
+        "黑暗物質": { price: 200, rarity: "rare", icon: "⚫" },
+        "魔王印記": { price: 500, rarity: "epic", icon: "🔯" },
+        "魔神之眼": { price: 1000, rarity: "legendary", icon: "👁️" },
+        "真實之心": { price: 5000, rarity: "mythic", icon: "💖" },
+        // 煉獄素材
+        "暗影凝膠": { price: 1000, rarity: "mythic", icon: "⚫" },
+        "虛空之塵": { price: 1200, rarity: "mythic", icon: "🌫️" },
+        "熔岩核心": { price: 1500, rarity: "mythic", icon: "🔥" },
+        "夢魘之角": { price: 1800, rarity: "mythic", icon: "🦄" },
+        "腐朽鎧甲": { price: 3000, rarity: "mythic", icon: "🛡️" },
+        "混沌神經": { price: 3500, rarity: "mythic", icon: "🧠" },
+        "鮮血精華": { price: 5000, rarity: "mythic", icon: "🩸" },
+        "命匣碎片": { price: 6000, rarity: "mythic", icon: "💀" },
+        "魔龍逆鱗": { price: 10000, rarity: "mythic", icon: "🐲" },
+        "不可名狀之物": { price: 50000, rarity: "ultra", icon: "🐙" },
+        // 新增道具
+        "彈弓": { price: 0, rarity: "rare", icon: "🪃", desc: "遭遇哈比時必定擊退哈比，發動後消失，無法出售" },
+        "鉤子": { price: 0, rarity: "rare", icon: "🪝", desc: "遭遇跌倒事件時可以躲避一次並獲得物品，發動後消失，無法出售" }
+    },
+    buffs: {
+        angel_song: { id: 'angel_song', name: '👼 天使的歌頌', type: 'angel', desc: '每次事件恢復 5 HP' },
+        angel_protection: { id: 'angel_protection', name: '🛡️ 天使的加護', type: 'angel', desc: '怪物造成的傷害減少 30%' },
+        angel_courage: { id: 'angel_courage', name: '⚔️ 天使的勇氣', type: 'angel', desc: '致命一擊機率提升至 20%' },
+        angel_wings: { id: 'angel_wings', name: '🕊️ 天使的翅膀', type: 'angel', desc: '逃跑成功率提升至 60%' },
+        demon_wealth: { id: 'demon_wealth', name: '💰 惡魔的財富', type: 'demon', desc: '攻擊得5金幣，但逃跑失敗被攻擊時扣5金幣' },
+        demon_destruction: { id: 'demon_destruction', name: '💀 惡魔的破壞', type: 'demon', desc: '10%機率秒殺怪物，觸發後扣除當前血量90%' },
+        demon_enhance: { id: 'demon_enhance', name: '🔥 惡魔的強化', type: 'demon', desc: '雙方致命一擊機率變為 50%' },
+        demon_wager: { id: 'demon_wager', name: '🎲 惡魔的賭約', type: 'demon', desc: '逃跑率80%，但每次逃跑有1%機率直接死亡' }
+    },
+    monsters: [
+        { name: "史萊姆", weight: 13.5, baseGold: 1, icon: "🦠", hp: 20, atk: 3, drop: "史萊姆黏液", eliteDrop: "史萊姆精華", bossDrop: "史萊姆王冠" },
+        { name: "哥布林", weight: 13.5, baseGold: 2, icon: "👺", hp: 35, atk: 5, drop: "破布", eliteDrop: "哥布林耳環", bossDrop: "哥布林金牙" },
+        { name: "狂狼", weight: 13.5, baseGold: 3, icon: "🐺", hp: 50, atk: 8, drop: "狼皮", eliteDrop: "狼牙", bossDrop: "狼王披風" },
+        { name: "骷髏兵", weight: 13.5, baseGold: 4, icon: "💀", hp: 60, atk: 10, drop: "骨頭", eliteDrop: "靈魂碎片", bossDrop: "死靈頭骨" },
+        { name: "半獸人", weight: 13.5, baseGold: 8, icon: "👹", hp: 90, atk: 12, drop: "斷劍", eliteDrop: "半獸人護符", bossDrop: "戰爭號角" },
+        { name: "幽靈", weight: 13.5, baseGold: 10, icon: "👻", hp: 70, atk: 15, drop: "靈質", eliteDrop: "怨念集合體", bossDrop: "幽靈提燈" },
+        { name: "石巨人", weight: 9, baseGold: 15, icon: "🗿", hp: 150, atk: 20, drop: "石塊", eliteDrop: "魔力核心", bossDrop: "大地之心" },
+        
+        // 2. 食人妖：由 5 調降至 4 (平衡用)
+        { name: "食人妖", weight: 4, baseGold: 25, icon: "🧟", hp: 200, atk: 25, drop: "巨棒", eliteDrop: "食人妖之血", bossDrop: "食人妖圖騰" },
+        
+        // 3. 雙足飛龍：由 3 調升至 4 (+1%)
+        { name: "雙足飛龍", weight: 4, baseGold: 40, icon: "🐉", hp: 300, atk: 35, drop: "龍鱗", eliteDrop: "龍之淚", bossDrop: "龍心" },
+        
+        // 4. 魔王：由 1 調升至 2 (+1%)
+        { name: "魔王", weight: 2, baseGold: 50, icon: "👿", hp: 500, atk: 50, drop: "黑暗物質", eliteDrop: "魔王印記", bossDrop: "魔神之眼" }
+    ],
+    itemPool: [
+        { name: "生鏽匕首", type: "weapon", val: 3, rarity: "common", price: 15, icon: "🗡️" },
+        { name: "木棒", type: "weapon", val: 4, rarity: "common", price: 20, icon: "🪵" },
+        { name: "布衣", type: "armor", val: 10, rarity: "common", price: 15, icon: "👕" },
+        { name: "治療藥水", type: "consumable", val: 30, rarity: "common", price: 25, icon: "🧪", desc: "恢復30點生命" },
+        { name: "騎士長槍", type: "weapon", val: 12, rarity: "uncommon", price: 80, icon: "🔱" },
+        { name: "鎖子甲", type: "armor", val: 40, rarity: "uncommon", price: 80, icon: "🛡️" },
+        { name: "強力藥水", type: "consumable", val: 80, rarity: "uncommon", price: 60, icon: "🍷", desc: "恢復80點生命" },
+        { name: "秘銀劍", type: "weapon", val: 30, rarity: "rare", price: 250, icon: "⚔️" },
+        { name: "板甲", type: "armor", val: 100, rarity: "rare", price: 250, icon: "🛡️" },
+        { name: "騎士盾", type: "shield", val: 2, rarity: "rare", price: 300, icon: "🛡️" },
+        { name: "精靈藥劑", type: "consumable", val: 200, rarity: "rare", price: 150, icon: "🧉", desc: "恢復200點生命" },
+        { name: "屠龍劍", type: "weapon", val: 60, rarity: "epic", price: 800, icon: "🐉" },
+        { name: "龍鱗鎧甲", type: "armor", val: 250, rarity: "epic", price: 800, icon: "🥋" },
+        { name: "塔盾", type: "shield", val: 5, rarity: "epic", price: 500, icon: "🧱" },
+        { name: "聖劍 Excalibur", type: "weapon", val: 150, rarity: "legendary", price: 2500, icon: "🌟" },
+        { name: "神之光輝", type: "armor", val: 400, rarity: "legendary", price: 2000, icon: "🌞" },
+        { name: "埃癸斯之盾", type: "shield", val: 8, rarity: "legendary", price: 900, icon: "🔱" },
+{ name: "攜帶式工作檯", type: "consumable", rarity: "rare", price: 1500, icon: "🧰", desc: "隨時隨地開啟製作視窗 (消耗品)" }
+    ],
+    phoenixFeather: {
+        id: "phoenix_feather",
+        name: "不死鳥的羽毛",
+        type: "revive",
+        rarity: "legendary",
+        icon: "🪶",
+        price: 0,
+        desc: "死亡時以50%生命復活，無法出售"
+    },
+    bible: {
+        id: "inferno_bible",
+        name: "煉獄聖經",
+        type: "special",
+        rarity: "mythic",
+        icon: "📕",
+        desc: "開啟通往煉獄的大門",
+        recipe: {mat: "真實之心", count: 2}
+    },
+achievements: [
+        // --- 🌌 深淵探索 (進度) ---
+        { id: "abyss_50", name: "深淵的呼喚", cond: "初次踏入危險領域 (通過第 50 層)", rarity: "common", check: (p) => p.depth >= 50 },
+        { id: "abyss_100", name: "百層的試煉", cond: "證明你有生存的資格 (通過第 100 層)", rarity: "rare", check: (p) => p.depth >= 100 },
+        { id: "abyss_500", name: "永夜的行者", cond: "習慣了黑暗與孤獨 (通過第 500 層)", rarity: "epic", check: (p) => p.depth >= 500 },
+        { id: "abyss_1000", name: "千層的執念", cond: "凡人難以抵達的境界 (通過第 1000 層)", rarity: "legendary", check: (p) => p.depth >= 1000 },
+        { id: "abyss_10000", name: "深淵的盡頭", cond: "見證無盡傳說的誕生 (通過第 10000 層)", rarity: "ultra", check: (p) => p.depth >= 10000, hidden: true },
+        
+        // --- ⚔️ 戰鬥與收集 (基礎) ---
+        { id: "hero_kill", name: "虛偽的終焉", cond: "擊敗表層世界的魔王 (1000層首領)", rarity: "legendary", check: (p) => p.kill1000Boss },
+        { id: "phoenix", name: "涅槃的餘燼", cond: "取得「不死鳥的羽毛」", rarity: "legendary", check: (p) => p.history.items.has("不死鳥的羽毛") },
+        { id: "collector", name: "行囊滿載", cond: "收集 20 種不同的物品", rarity: "common", check: (p) => Game.getCollectedItemsCount() >= 20 },
+        { id: "researcher", name: "魔物博學者", cond: "取得所有一般與菁英怪物的掉落物", rarity: "epic", check: (p) => Game.checkDrops('researcher') },
+        { id: "prospector", name: "萬物洞察者", cond: "取得表層世界所有怪物的掉落物 (含首領)", rarity: "legendary", check: (p) => Game.checkDrops('prospector') },
+        { id: "hero_true", name: "真實的勇氣", cond: "獲得「真實之心」，看清世界的真相", rarity: "mythic", hidden: true, check: (p) => p.history.items.has("真實之心") },
+
+        // --- 🔥 煉獄與神話 (進階) ---
+        { id: "inferno_enter", name: "地獄邊境", cond: "使用煉獄聖經，墮入煉獄世界", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.inInferno },
+        { id: "mythic_smith", name: "黑曜石的錘音", cond: "在「煉獄爐火」親手打造一件神話裝備", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has('暗影替身') || p.history.items.has('虛空之鏡') || p.history.items.has('地心熔爐鎧') || p.history.items.has('夢魘穿刺者') || p.history.items.has('亡者項鍊') || p.history.items.has('理智鞭笞') || p.history.items.has('血之契約書') || p.history.items.has('永生護符') || p.history.items.has('逆鱗龍裝') || p.history.items.has('滅世之槍') },
+        { id: "old_one_end", name: "不可名狀的恐懼", cond: "擊敗煉獄深處的「舊日支配者」", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has("不可名狀之物") },
+        { id: "minotaur_rage", name: "鬥牛士的榮耀", cond: "同時持有「紅布」與「牛頭人戰斧」", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has("紅布") && p.history.items.has("牛頭人戰斧") },
+        
+        // --- 😈 七宗罪試煉 (挑戰) ---
+        { id: "sin_pride", name: "征服傲慢", cond: "獲得「傲慢之眼」", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has("傲慢之眼") },
+        { id: "sin_envy", name: "征服嫉妒", cond: "獲得「嫉妒魔盒」", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has("嫉妒魔盒") },
+        { id: "sin_wrath", name: "征服暴怒", cond: "獲得「暴怒指虎」", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has("暴怒指虎") },
+        { id: "sin_sloth", name: "征服怠惰", cond: "獲得「眠戒」", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has("眠戒") },
+        { id: "sin_greed", name: "征服貪婪", cond: "獲得「金色聖像」", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has("金色聖像") },
+        { id: "sin_gluttony", name: "征服暴食", cond: "獲得「暴食之牙」", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has("暴食之牙") },
+        { id: "sin_lust", name: "征服色慾", cond: "獲得「魅魔香水」", rarity: "mythic", hidden: true, category: "inferno", check: (p) => p.history.items.has("魅魔香水") },
+        
+        // --- 🔒 隱藏與終極 (傳說) ---
+        { id: "max_train", name: "登峰造極", cond: "將精靈與史萊姆長老的強化全部修練至滿級 (各5次)", rarity: "mythic", hidden: true, check: (p) => p.fairyEnhanceCount >= 5 && p.elderEnhanceCount >= 5 },
+        { id: "sin_crown", name: "原罪的背負者", cond: "集齊七件罪惡飾品，獲得「原罪之冠」", rarity: "ultra", hidden: true, category: "inferno", check: (p) => p.history.items.has("原罪之冠") },
+        { id: "god_killer", name: "逆天改命", cond: "擊敗神之代行者，獲得「輪迴沙漏」", rarity: "ultra", hidden: true, check: (p) => p.history.items.has("輪迴沙漏") },
+        { id: "rebirth_used", name: "輪迴的起點", cond: "使用沙漏穿越時空，並保留了記憶", rarity: "ultra", hidden: true, check: (p) => p.history.items.has("輪迴後的記憶") },
+        { id: "hero_all_items", name: "全知的境界", cond: "獲得圖鑑中所有的物品", rarity: "ultra", hidden: true, check: (p) => Game.checkAllItems() },
+        
+        // --- 💗 莉莉絲的羈絆 (劇情) ---
+        { id: "lilith_note", name: "少女的秘密", cond: "從害羞的魅魔手中獲得「紙條」", rarity: "epic", hidden: true, check: (p) => p.history.items.has("紙條") },
+        { id: "lilith_sword", name: "守護的決意", cond: "持有紙條進入煉獄，獲得「神聖光劍」", rarity: "epic", hidden: true, check: (p) => p.history.items.has("神聖光劍") },
+        { id: "lilith_pass", name: "溫柔的通行證", cond: "出示紙條通過色慾試煉，獲得「魅魔的心意」", rarity: "epic", hidden: true, check: (p) => p.history.items.has("魅魔的心意") },
+        { id: "lilith_bless", name: "跨越種族的羈絆", cond: "在與神之代行者決戰時，莉莉絲挺身而出", rarity: "mythic", hidden: true, check: (p) => p.lilithBlessing && !p.lilithSacrificed },
+        { id: "lilith_sacrifice", name: "凋零的粉色", cond: "為了守護你，莉莉絲在神戰中犧牲 (Bad End)", rarity: "mythic", hidden: true, check: (p) => p.lilithSacrificed && Player.history.items.has("輪迴沙漏") }, 
+        { id: "lilith_love", name: "永恆的誓言", cond: "戰勝神之代行者，且莉莉絲存活 (True End)", rarity: "ultra", hidden: true, check: (p) => p.lilithBlessing && Player.history.items.has("輪迴沙漏") },
+    ]
+};
